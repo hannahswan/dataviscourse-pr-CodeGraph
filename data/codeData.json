@@ -1,0 +1,432 @@
+[{
+    "key": "main",
+    "value": {
+        "arguements": [],
+        "returnVariable": "0",
+      "functionCalls": [
+        {
+          "key": "add",
+          "arguements": [ "n1", "n2" ],
+          "returnVarEq": "noVar",
+          "line": 22
+        },
+        {
+          "key": "negate",
+          "arguements": [ "noVar" ],
+          "returnVarEq": "y",
+          "line": 22
+        },
+        {
+          "key": "multiply",
+          "arguements": [ "n1", "n2" ],
+          "returnVarEq": "z",
+          "line": 23
+        },
+        {
+          "key": "multiply",
+          "arguements": [ "n1", "n2" ],
+          "returnVarEq": "z",
+          "line": 23
+        },
+        {
+          "key": "quadraticEquation",
+          "arguements": [ "x", "y", "z" ],
+          "returnVarEq": "root1",
+          "line": 25
+        },
+        {
+          "key": "quadraticEquation",
+          "arguements": [ "x", "y", "z", "otherRoot" ],
+          "returnVarEq": "root2",
+          "line": 26
+        }
+      ],
+        "conditionals": [ ],
+        "arguementsChanged": [],
+        "variables": [{
+            "key": "n1",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        }, {
+            "key": "n2",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        }, {
+            "key": "x",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        }, {
+            "key": "y",
+            "value": {
+                "parentVars": ["n1", "n2"],
+                "parentFunctions": ["negate", "add"]
+            }
+        }, {
+            "key": "z",
+            "value": {
+                "parentVars": ["n1","n2"],
+                "parentFunctions": ["multiply"]
+            }
+        }, {
+            "key": "otherRoot",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        }, {
+            "key": "root1",
+            "value": {
+                "parentVars": ["x","y","z"],
+                "parentFunctions": ["quadraticEquation"]
+            }
+        }, {
+            "key": "root2",
+            "value": {
+                "parentVars": ["x","y","z","otherRoot"],
+                "parentFunctions": ["quadraticEquation"]
+            }
+        }]
+    }
+}, {
+    "key": "quadraticEquation",
+    "value": {
+        "arguements": ["a", "b", "c", "neg"],
+        "returnVariable": "x",
+      "functionCalls": [
+        {
+          "key": "square",
+          "arguements": [ "b" ],
+          "returnVarEq": "b2",
+          "line": 44
+        },
+        {
+          "key": "multiply",
+          "arguements": [ 4, "a" ],
+          "returnVarEq": "noVar",
+          "line": 45
+        },
+        {
+          "key": "multiply",
+          "arguements": [ "noVar", "c" ],
+          "returnVarEq": "ac4",
+          "line": 45
+        },
+        {
+          "key": "subtract",
+          "arguements": [ "b2", "ac4" ],
+          "returnVarEq": "num",
+          "line": 46
+        },
+        {
+          "key": "negate",
+          "arguements": [ "b" ],
+          "returnVarEq": "noVar1",
+          "line": 48
+        },
+        {
+          "key": "sqrt",
+          "arguements": [ "num" ],
+          "returnVarEq": "noVar2",
+          "line": 48
+        },
+        {
+          "key": "subtract",
+          "arguements": [ "noVar1", "noVar2" ],
+          "returnVarEq": "y",
+          "line": 48
+        }
+        ,
+        {
+          "key": "negate",
+          "arguements": [ "b" ],
+          "returnVarEq": "noVar1",
+          "line": 48
+        },
+        {
+          "key": "sqrt",
+          "arguements": [ "num" ],
+          "returnVarEq": "noVar2",
+          "line": 48
+        },
+        {
+          "key": "add",
+          "arguements": [ "noVar1", "noVar2" ],
+          "returnVarEq": "y",
+          "line": 48
+        },
+        {
+          "key": "multiply",
+          "arguements": [ 2,"a" ],
+          "returnVarEq": "denom",
+          "line": 51
+        },
+        {
+          "key": "divide",
+          "arguements": [ "y", "denom" ],
+          "returnVarEq": "x",
+          "line": 52
+        }
+      ],
+      "conditionals": [
+        {
+          "line": 47,
+          "type": "if",
+          "conditionVars": "neg",
+          "beginBranch": 48,
+          "endBranch": 48,
+          "elseLine": 49
+        },
+        {
+          "line": 49,
+          "type":  "else",
+          "conditionVars": "",
+          "beginBranch": 50,
+          "endBranch": 50,
+          "elseLine": 0
+        }
+      ],
+        "arguementsChanged": [],
+        "variables": [{
+            "key": "x",
+            "value": {
+                "parentVars": ["y", "denom"],
+                "parentFunctions": ["divide"]
+            }
+        }, {
+            "key": "y",
+            "value": {
+                "parentVars": ["b","num"],
+              "parentFunctions": [
+                "negate", "sqrt", "subtract", "add"
+              ]
+            }
+        }, {
+            "key": "b2",
+            "value": {
+                "parentVars": ["b"],
+                "parentFunctions": ["square"]
+            }
+        }, {
+            "key": "ac4",
+            "value": {
+                "parentVars": ["a","c"],
+                "parentFunctions": ["multiply","multiply"]
+            }
+        }, {
+            "key": "num",
+            "value": {
+                "parentVars": ["b2","ac4"],
+                "parentFunctions": ["subtract"]
+            }
+        }, {
+            "key": "denom",
+            "value": {
+                "parentVars": ["a"],
+                "parentFunctions": ["multiply"]
+            }
+        },{
+            "key": "a",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        },{
+            "key": "b",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        },{
+            "key": "c",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        },{
+            "key": "neg",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        }]
+    }
+}, {
+    "key": "add",
+    "value": {
+        "arguements": ["u", "v"],
+        "returnVariable": "ans",
+        "functionCalls": [],
+        "conditionals": [],
+        "arguementsChanged": [],
+        "variables": [{
+            "key": "ans",
+            "value": {
+                "parentVars": ["u", "v"],
+                "parentFunctions": []
+            }
+        },{
+            "key": "u",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        },{
+            "key": "v",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        }]
+    }
+}, {
+    "key": "square",
+    "value": {
+        "arguements": ["n"],
+        "returnVariable": "retVal",
+        "functionCalls": [],
+        "conditionals": [],
+        "arguementsChanged": [],
+        "variables": [{
+            "key": "retVal",
+            "value": {
+                "parentVars": ["n"],
+                "parentFunctions": []
+            }
+        },{
+            "key": "n",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        }]
+    }
+}, {
+    "key": "subtract",
+    "value": {
+        "arguements": ["x1", "x2"],
+        "returnVariable": "y",
+        "functionCalls": [{
+          "key": "negate",
+          "arguements": [ "x2" ],
+          "returnVarEq": "x3",
+          "line": 62
+        },{
+          "key": "add",
+          "arguements": [ "x1","x3" ],
+          "returnVarEq": "y",
+          "line": 63
+        }],
+        "conditionals": [],
+        "arguementsChanged": [],
+        "variables": [{
+            "key": "x3",
+            "value": {
+                "parentVars": ["x2"],
+                "parentFunctions": ["negate"]
+            }
+        },{
+            "key": "y",
+            "value": {
+                "parentVars": ["x1","x3"],
+                "parentFunctions": ["add"]
+            }
+        },{
+            "key": "x1",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        },{
+            "key": "x2",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        }]
+    }
+}, {
+    "key": "multiply",
+    "value": {
+        "arguements": ["x","y"],
+        "returnVariable": "val",
+        "functionCalls": [],
+        "conditionals": [],
+        "arguementsChanged": [],
+        "variables": [{
+            "key": "val",
+            "value": {
+                "parentVars": ["x","y"],
+                "parentFunctions": []
+            }
+        },{
+            "key": "x",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        },{
+            "key": "y",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        }]
+    }
+}, {
+    "key": "negate",
+    "value": {
+        "arguements": ["a"],
+        "returnVariable": "num",
+        "functionCalls": [],
+        "conditionals": [],
+        "arguementsChanged": [],
+      "variables": [
+        {
+          "key": "num",
+          "value": {
+            "parentVars": [ "a" ],
+            "parentFunctions": [ ]
+          }
+        },{
+            "key": "a",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        }]
+    }
+}, {
+    "key": "divide",
+    "value": {
+        "arguements": ["num","den"],
+        "returnVariable": "ans",
+        "functionCalls": [],
+        "conditionals": [],
+        "arguementsChanged": [],
+        "variables": [{
+            "key": "num",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        },{
+            "key": "den",
+            "value": {
+                "parentVars": [],
+                "parentFunctions": []
+            }
+        },{
+            "key": "ans",
+            "value": {
+                "parentVars": ["num","den"],
+                "parentFunctions": []
+            }
+        }]
+    }
+}]
