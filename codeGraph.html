@@ -10,51 +10,46 @@
 
 <body>
 
+
 <div class="container">
     <header>
-        <!--<img src="assets/fifa_brazil_logo.jpg" alt="Brazil WC Russia Logo" id="logo"/>-->
         <h1>Exploring Functions and Variables</h1>
         <div>Name: Hannah Swan; E-Mail: hannah.swan@utah.edu; UID: u0939840</div>
     </header>
 
 
-    <div class="view">
-        <h2>Function Table</h2>
-
-        <table id="functionTable">
+    <div style="width: 100%; overflow: hidden;">
+        <div style="width: 300px; float: left;"> <h2>Functions</h2> <table id="functionTable">
             <thead>
-            <tr>
-                <th id="functionHeader">Functions</th>
-            <!--    <td id="goalsHeader" style="text-align:center"> Goals <span class="glyphicon glyphicon-sort"></span><br/></td>
-                <td id="resultsHeader">Round/Result</td>
-                <td id="winsHeader">Wins</td>
-                <td id="lossesHeader">Losses</td>
-                <td id="totalGamesHeader">Total Games</td> -->
-            </tr>
-            <tr>
-                <td></td>
-                <td id="goalHeader"></td>
-            </tr>
             </thead>
             <tbody>
 
             </tbody>
-        </table>
+        </table> </div>
+        <div style="margin-left: 320px;"> <h2>Variables</h2> <table id="variableTable">
+            <thead>
+            </thead>
+            <tbody>
 
+            </tbody>
+        </table>  </div>
     </div>
+
     <div class="view">
 
 
         <h2>CodeGraph</h2>
-        <svg width="500" height="900">
-            <g id="tree"></g>
+        <svg id="graph" width="900" height="600">
         </svg>
     </div>
 
 </div>
-<!--<script type="application/javascript" src="load_hacker.js"></script>-->
-<script type="application/javascript" src="js/tree.js"></script>
+
+<script type="application/javascript" src="js/varGraph.js"></script>
+<script type="application/javascript" src="js/functionGraph.js"></script>
 <script type="application/javascript" src="js/table.js"></script>
+<script type="application/javascript" src="js/varTable.js"></script>
 <script type="application/javascript" src="js/script.js"></script>
+<script type="application/javascript" src="js/node.js"></script>
 </body>
 </html>
