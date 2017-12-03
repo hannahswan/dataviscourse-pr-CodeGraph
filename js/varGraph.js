@@ -1,23 +1,21 @@
-/** Class implementing the tree view. */
-class Tree {
-    /**
-     * Creates a Tree Object
-     */
+//Class for varibale graphs
+class VariableGraph {
+
     constructor() {
         this.nodes = [];
         this.links = [];
-        this.treeSVG = d3.select("#tree");
+        this.graphSVG = d3.select("#graph");
         this.positions = [-1]; //stores number of positions for each level
         this.numLevels = 0;
         this.isSim = false;
         this.width = 900;
-        this.height = 900;
+        this.height = 600;
         this.simulation = 0;
     }
 
-    createTree() { }
+    createGraph() { }
 
-    drawTree() {
+    drawGraph() {
         let nodeSize = 25;
 
         //links
@@ -25,7 +23,7 @@ class Tree {
         let linkList = this.links;
         let diagonal = this.diagonal;
 
-        var linksG = this.treeSVG.append("g")
+        var linksG = this.graphSVG.append("g")
             .attr("id", "linksG");
 
         if(!this.isSim) {
@@ -41,7 +39,6 @@ class Tree {
                     return diagonal(nd, prt);
                 });
         } else {
-            console.log("I'm in here. ", this.links);
             var theLinks = linksG.selectAll('line.link')
                 .data(this.links)
                 .enter()
@@ -51,7 +48,7 @@ class Tree {
         }
 
         //nodes
-        var nodeG = this.treeSVG.append("g")
+        var nodeG = this.graphSVG.append("g")
             .attr("id", "nodesG");
         let nodes = nodeG.selectAll("circle")
             .data(this.nodes)
@@ -59,18 +56,15 @@ class Tree {
             .append("circle")
             .attr("r", nodeSize)
             .attr("cx", function (d) {
-                //return d.level * 50 + 50;
                 return d.x;
             })
             .attr("cy", function (d) {
-                //return d.position * 50 + 50;
                 return d.y;
             })
-            //.attr("class", "node")
             .classed('node', true);
 
         //labels
-        var labelsG = this.treeSVG.append("g")
+        var labelsG = this.graphSVG.append("g")
             .attr("id", "labelsG");
         let labels = labelsG.selectAll("text")
             .data(this.nodes)
@@ -79,7 +73,6 @@ class Tree {
             .attr("dy", ".35em")
             .attr("x", function(d) {
                 return d.x;
-                //return d.children || d._children ? d.y + padding - 8 : d.y + padding + 10;
             })
             .attr("y", function (d) {
                 return d.y;
@@ -88,26 +81,15 @@ class Tree {
             .text(function(d) { return d.name; })
             .style("fill", "black");
 
-        console.log(theLinks);
-
         if(this.isSim) {
             this.simulation.nodes(nodeList);
-            // The tension force (the forceLink that we named "link" above) also needs to know
-            // about the link data that we finally have - we couldn't give it earlier, because it
-            // hadn't been loaded yet!
-
-            //console.log(links);
 
             this.simulation.force("link")
                 .links(linkList);
 
-            // Finally, let's tell the simulation how to update the graphics
             this.simulation.on("tick", function () {
-                // Every "tick" of the simulation will create / update each node's coordinates;
-                // we need to use those coordinates to move the lines and circles into place
                 theLinks
                     .attr("x1", function (d) {
-                        //console.log(d);
                         return d.source.x;
                     })
                     .attr("y1", function (d) {
@@ -140,29 +122,26 @@ class Tree {
 
     }
 
-    updateTree(functionData/*, treeID*/) {
-        this.clearTree();
-        this.buildTree(functionData);
-        this.drawTree();
+    updateGraph(functionData) {
+        this.clearGraph();
+        this.buildGraph(functionData);
+        this.drawGraph();
     }
 
 
-    clearTree() {
-        console.log("Attempting to clear the tree, ",this.isSim);
+    clearGraph() {
         this.isSim = false;
         this.simulation = 0;
-        this.treeSVG.select("#nodesG").remove();
-        this.treeSVG.select("#linksG").remove();
-        this.treeSVG.select("#labelsG").remove();
+        this.graphSVG.select("#nodesG").remove();
+        this.graphSVG.select("#linksG").remove();
+        this.graphSVG.select("#labelsG").remove();
         this.numLevels = 0;
         this.positions = [-1];
         this.nodes = [];
         this.links = [];
-        console.log(this.simulation);
     }
 
-    buildTree(array) {
-        //console.log(array);
+    buildGraph(array) {
         let retVal = array.value.returnVariable;
 
         //if there a return var - organize by return var
@@ -176,62 +155,52 @@ class Tree {
 
             //for each parent, do this again, until the parents are the arguements.
             this.assignPositions(array.value.variables, child, currLevel);
-            //console.log(this.links);
 
             this.setSpatialPositions();
 
         } else {
-            console.log("No return value");
             //Do a sim
             this.isSim = true;
             this.constructNodesAndLinks(array.value.variables);
 
             this.simulation = d3.forceSimulation()
-                // forceLink creates tension along each link, keeping connected nodes together
-                /*.force("link", d3.forceLink().id(function (d,i) {
-                    return i;
-                }))*/
-                // forceManyBody creates a repulsive force between nodes, keeping them away from each other
-                //.force("charge", d3.forceManyBody())
-                // forceCenter acts like gravity, keeping the whole visualization in the middle of the screen
                 .force("center", d3.forceCenter(this.width / 2, this.height / 2))
                 .force("collide", d3.forceCollide(100))
                 .force("link", d3.forceLink().distance(100));
+
         }
 
     }
 
+    highlight(data) {
+        let nodes = this.graphSVG.selectAll("circle")
+            .classed('highlighted', function (d) {
+                    if(d.name == data.key) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+
+            console.log(nodes);
+    }
+
     constructNodesAndLinks(array) {
-        console.log("Organize list of nodes and links. ",array);
         let len = array.length;
 
         let i = 0;
         for(i; i < len; i++) {
-            //console.log("Working on ", array[i].key, " whose parents are ", array[i].value.parentVars);
             this.nodes.push(new Node(array[i].key,array[i].value.parentVars));
-            /*let j = 0;
-            let numLinks = array[i].value.parentVars.length;
-            for(j; j < numLinks; j++ ) {
-                let parent = array[i].value.parentVars[j];
-                let parentID = this.getIndexOf(array, parent);
-                if(parentID !== -1) {
-                    //console.log("link ", i, ", ",parentID);
-                    this.links.push({source: this.nodes[i], target: this.nodes[parentID])
-                }
-            }*/
         }
 
         i = 0;
         for(i; i < len; i++) {
-            //console.log("Working on links for ", array[i].key, " whose parents are ", array[i].value.parentVars);
-            //this.nodes.push(new Node(array[i].key,array[i].value.parentVars));
             let j = 0;
             let numLinks = array[i].value.parentVars.length;
             for(j; j < numLinks; j++ ) {
                 let parent = array[i].value.parentVars[j];
                 let parentID = this.getIndexOf(array, parent);
                 if(parentID !== -1) {
-                    //console.log("link ", i, ", ",parentID);
                     this.links.push(
                         {
                             "source": this.nodes[i],
@@ -241,15 +210,10 @@ class Tree {
                 }
             }
         }
-
-        //console.log("After construction, ", this.links);
     }
 
     setSpatialPositions() {
         let padding = 100;
-
-        //console.log(this.positions);
-        //console.log(this.numLevels);
 
         let len = this.nodes.length;
         let i = 0;
@@ -268,13 +232,10 @@ class Tree {
             this.numLevels = currLevel;
             this.positions.push(-1);
         }
-        //console.log(this.nodes);
 
         for(i; i < this.nodes[rootID].parents.length; i++) {
             let parent = this.nodes[rootID].parents[i];
             let parentID = this.getIndexOf(array, parent);
-
-            //console.log(this.nodes[rootID].name," -> ", array[parentID].key);
 
             //add to nodes (even if it's already been added
             let grandParents = array[parentID].value.parentVars;
@@ -304,16 +265,6 @@ class Tree {
         }
         return -1;
     }
-
-    /*getNodeIndexOf(key) {
-        let ind = 0;
-        for(ind; ind < this.nodes[length]; ind++){
-            if(this.nodes[ind].name == key) {
-                return ind;
-            }
-        }
-        return -1;
-    }*/
 
     diagonal(s, d) {
         let path = "M " + s.y + " " + s.x ;

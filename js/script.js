@@ -1,13 +1,16 @@
-    /**
-     * Loads in the table information from codeData.json 
-     */
+
+// Loads data and initializes views
+
 d3.json('data/codeData.json',function(error,data){
-    let tree = new Tree();
-    tree.createTree(data);
 
-    let table = new Table(data,tree);
+    let funGraph = new FunctionGraph(data);
+    let varGraph = new VariableGraph();
+    let varTable = new VarTable(varGraph);
 
-    table.createTable();
+    let table = new Table(data, varGraph, varTable);
+
     table.updateTable();
+    funGraph.createGraph();
+    funGraph.updateGraph();
 });
 
